@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(schema = "working_data", name = "t_company_resource")
-public class CompanyResource {
+@Table(schema = "working_data", name = "t_verified_company")
+public class VerifiedCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer companyResourceId;
+    private Integer verifiedId;
     @ManyToOne(targetEntity = Company.class)
     @JoinColumn(name = "company_id")
     private Company companyID;
@@ -18,28 +18,28 @@ public class CompanyResource {
     @Column(name = "check_ts")
     private Timestamp checkTs;
 
-    public CompanyResource() {
+    public VerifiedCompany() {
     }
 
-    public CompanyResource(Company companyID, Resource resourceId, Timestamp checkTs) {
+    public VerifiedCompany(Company companyID, Resource resourceId, Timestamp checkTs) {
         this.companyID = companyID;
         this.resourceId = resourceId;
         this.checkTs = checkTs;
     }
 
-    public CompanyResource(Integer companyResourceId, Company companyID, Resource resourceId, Timestamp checkTs) {
-        this.companyResourceId = companyResourceId;
+    public VerifiedCompany(Integer verifiedId, Company companyID, Resource resourceId, Timestamp checkTs) {
+        this.verifiedId = verifiedId;
         this.companyID = companyID;
         this.resourceId = resourceId;
         this.checkTs = checkTs;
     }
 
-    public Integer getCompanyResourceId() {
-        return companyResourceId;
+    public Integer getVerifiedId() {
+        return verifiedId;
     }
 
-    public void setCompanyResourceId(Integer companyResourceId) {
-        this.companyResourceId = companyResourceId;
+    public void setVerifiedId(Integer verifiedId) {
+        this.verifiedId = verifiedId;
     }
 
     public Company getCompanyID() {
