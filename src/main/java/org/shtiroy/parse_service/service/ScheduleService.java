@@ -38,7 +38,7 @@ public class ScheduleService {
                     if (!checkParser.checkServiceResource(resource.getResourceName(),true)){
                        Thread data2b = new Thread(() -> {
                             while(true){
-                                if (!data2bResource.getJSONFromUrl(resource.getResourceUrl()))
+                                if (!data2bResource.getJSONFromUrl(resource))
                                     break;
                                 try{
                                     Thread.sleep(30000);

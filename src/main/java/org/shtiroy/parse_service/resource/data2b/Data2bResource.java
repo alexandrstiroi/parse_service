@@ -4,8 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.shtiroy.parse_service.entity.Company;
 import org.shtiroy.parse_service.entity.CompanyJSON;
+import org.shtiroy.parse_service.entity.CompanyResource;
+import org.shtiroy.parse_service.entity.Resource;
 import org.shtiroy.parse_service.repository.CompanyJSONRepository;
 import org.shtiroy.parse_service.repository.CompanyRepository;
+import org.shtiroy.parse_service.repository.CompanyResourceRepository;
 import org.shtiroy.parse_service.resource.ResourceParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,17 +23,21 @@ public class Data2bResource extends ResourceParser {
     private CompanyRepository companyRepository;
     @Autowired
     private CompanyJSONRepository companyJSONRepository;
-
+    @Autowired
+    private CompanyResourceRepository companyResourceRepository;
     /**
      * Метод отправляет get запрос для скачивания json.
-     * @param url - аддрес запроса.
+     * @param resource - аддрес запроса.
      * @return - boolean, если запрос отработал.
      */
     @Override
-    public boolean getJSONFromUrl(String url) {
+    public boolean getJSONFromUrl(Resource resource) {
         try {
             List<Company> companyList = companyRepository.findAllActiveCompany(1);
-            String strJson = (String) methodGet(url + companyList.get(0).getIdno());
+            LOGGER.info("try to get " + companyList.get(0).getIdno());
+            String strJson = (String) methodGet(resource.getResourceUrl() + companyList.get(0).getIdno());
+            CompanyResource companyResource = new CompanyResource(companyList.get(0), resource, new Timestamp(System.currentTimeMillis()));
+            companyResourceRepository.save(companyResource);
             CompanyJSON companyJSON = new CompanyJSON();
             companyJSON.setIdno(companyList.get(0).getIdno());
             companyJSON.setCompanyData(strJson);

@@ -2,6 +2,7 @@ package org.shtiroy.parse_service.resource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.shtiroy.parse_service.entity.Resource;
 import org.shtiroy.parse_service.utils.UserAgent;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 public abstract class ResourceParser {
     private static final Logger LOGGER = LogManager.getLogger(ResourceParser.class.getName());
 
-    public abstract boolean getJSONFromUrl(String url);
+    public abstract boolean getJSONFromUrl(Resource resource);
 
     protected Object methodGet(String urlStr){
         RestTemplate restTemplate = new RestTemplate();
